@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletController : MonoBehaviour
+public class BulletController : MonoBehaviour, InterfaceApplyDamage
 {
     public float verticalSpeed;
     public float verticalBoundary;
     public BulletManager bulletManager;
-    
+    public int damage;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +21,8 @@ public class BulletController : MonoBehaviour
         _CheckBounds();
     }
 
+    
+
     private void _Move()
     {
         transform.position += new Vector3(0.0f, verticalSpeed, 0.0f) * Time.deltaTime;
@@ -32,5 +34,16 @@ public class BulletController : MonoBehaviour
         {
             bulletManager.ReturnBullet(gameObject);
         }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        bulletManager.ReturnBullet(gameObject);
+
+    }
+    public int ApplyDamage()
+    {
+        Debug.Log(damage.ToString());
+        return damage;
     }
 }
